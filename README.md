@@ -40,7 +40,7 @@ the util subdirectory.
 
 ### License
 
-The COPYING.txt file within this package contains information on the 
+The LICENSE file within this package contains information on the 
 open source license.  This license allows open source redistribution 
 of the source and binary files in the library.
 
