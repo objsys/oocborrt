@@ -21,6 +21,9 @@
 #include "rtxsrc/rtxError.h"
 #include "rtxsrc/rtxFile.h"
 #include "rtxsrc/rtxMemory.h"
+#if defined(_MSC_VER) && _MSC_VER >= 1400 && !defined(_WIN32_WCE)
+#include <errno.h>
+#endif
 
 EXTRTMETHOD int rtxFileOpen
 (FILE** ppFile, const char* filePath, const char* access)
