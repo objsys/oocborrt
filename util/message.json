@@ -1,0 +1,33 @@
+{
+   "name":{
+      "givenName":"John",
+      "initial":"P",
+      "familyName":"Smith"
+   },
+   "number":51,
+   "title":"Director",
+   "dateOfHire":"19710917",
+   "nameOfSpouse":{
+      "givenName":"Mary",
+      "initial":"T",
+      "familyName":"Smith"
+   },
+   "children":[
+      {
+         "name":{
+            "givenName":"Ralph",
+            "initial":"T",
+            "familyName":"Smith"
+         },
+         "dateOfBirth":"19571111"
+      },
+      {
+         "name":{
+            "givenName":"Susan",
+            "initial":"B",
+            "familyName":"Jones"
+         },
+         "dateOfBirth":"19590717"
+      }
+   ]
+}
