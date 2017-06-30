@@ -5,14 +5,14 @@ IPATHS = -I../../
 LIBDIR = ../../lib
 LPATHS = $(LPPFX)$(LIBDIR)
 
-unittest$(EXE): unittest$(OBJ) $(LIBDIR)/$(LIBPFX)osrtcbor$(A)
+unittest$(EXE): unittest$(OBJ) $(LIBDIR)/$(LIBPFX)oortcbor$(A)
 	$(LINK) unittest$(OBJ) $(LINKOPT_) $(LPATHS) $(LLCBOR) $(LLSYS)
 
-unittest$(OBJ): unittest.c ../../../rtcborsrc/osrtcbor.h \
- ../../../rtxsrc/rtxContext.h ../../../rtxsrc/rtxDList.h \
- ../../../rtxsrc/osSysTypes.h ../../../rtxsrc/rtxExternDefs.h \
- ../../../rtxsrc/rtxCommonDefs.h ../../../rtxsrc/osMacros.h \
- ../../../rtxsrc/rtxStack.h
+unittest$(OBJ): unittest.c ../../rtcborsrc/osrtcbor.h \
+ ../../rtxsrc/rtxContext.h ../../rtxsrc/rtxDList.h \
+ ../../rtxsrc/osSysTypes.h ../../rtxsrc/rtxExternDefs.h \
+ ../../rtxsrc/rtxCommonDefs.h ../../rtxsrc/osMacros.h \
+ ../../rtxsrc/rtxStack.h
 
 depends:
 	gcc -E -MM $(IPATHS) unittest.c
