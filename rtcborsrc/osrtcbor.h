@@ -524,7 +524,22 @@ EXTERNRT int rtCborEncNull (OSCTXT* pctxt);
 
 /**
  * This function will encode a numeric string value.  The string is assumed
- * to be a base-10 stirng in JSON number format.
+ * to be a base-10 string in JSON number format.
+ *
+ * The value will be encoded using one of int, bignum (tag 2 or 3), float16,
+ * float32, float64, or decimal fraction (tag 4).  
+ * 
+ * If the value does not contain the characters '.', 'E', or 'e', then the
+ * value will be encoded using int or bignum, whichever it fits in.
+ * Otherwise, there are three conditions under which a decimal fraction
+ * encoding will be used:
+ *    1) the string has more than DBL_DIG significant digits (typically, 15)
+ * OR 2) conversion using strtod would set errno to ERANGE
+ * OR 3) conversion using strtod would return zero and the value has non-zero
+ *       digits
+ * Finally, if the value is not encoded using decimal fraction, then it will be
+ * converted to a double and encoded in float16/float32/float64, using the
+ * smallest precision encoding type that can represent the double value exactly.
  *
  * @param pctxt       Pointer to a context structure. This provides a storage
  *                       area for the function to store all working variables
