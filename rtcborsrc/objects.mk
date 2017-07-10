@@ -1,5 +1,7 @@
 OSRT_CBOR_RTOBJECTS = \
 $(OBJDIR)$(PS)rtCborDecArray$(OBJ) \
+$(OBJDIR)$(PS)rtCborDecBase64$(OBJ) \
+$(OBJDIR)$(PS)rtCborDecDynBase64$(OBJ) \
 $(OBJDIR)$(PS)rtCborDecBigFloat$(OBJ) \
 $(OBJDIR)$(PS)rtCborDecBigInt$(OBJ) \
 $(OBJDIR)$(PS)rtCborDecByteStr$(OBJ) \
@@ -21,6 +23,7 @@ $(OBJDIR)$(PS)rtCborDecUTF8Str$(OBJ) \
 $(OBJDIR)$(PS)rtCborDecDynUTF8Str$(OBJ) \
 $(OBJDIR)$(PS)rtCborDecValue$(OBJ) \
 $(OBJDIR)$(PS)rtCborEncArray$(OBJ) \
+$(OBJDIR)$(PS)rtCborEncBase64$(OBJ) \
 $(OBJDIR)$(PS)rtCborEncBigFloat$(OBJ) \
 $(OBJDIR)$(PS)rtCborEncBigInt$(OBJ) \
 $(OBJDIR)$(PS)rtCborEncByteStr$(OBJ) \

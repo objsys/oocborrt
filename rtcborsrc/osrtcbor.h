@@ -139,6 +139,81 @@ EXTERNRT int rtCborDecBigInt (OSCTXT* pctxt, OSOCTET byte1,
 EXTERNRT int rtCborDecBool (OSCTXT* pctxt, OSOCTET byte1, OSBOOL* pvalue);
 
 /**
+ * This function will decode a base64 text string to binary data in a static
+ * buffer.
+ *
+ * PRE: buffer pointer is located at first byte of the text string (it has
+ * moved beyond the encoding of tag 34).
+ *
+ * @param pctxt       Pointer to a context structure. This provides a storage
+ *                       area for the function to store all working variables
+ *                       that must be maintained between function calls.
+ * @param pnumocts    Pointer to size-typed variable to receive decoded length.
+ * @param buffer      Static byte array into which data will be read.
+ * @param bufsiz      Size of the static byte array into which the data will
+ *                       be read.
+ * @return            Status of operation: 0 = success, negative value = error.
+ */
+EXTERNRT int rtCborDecBase64
+(OSCTXT* pctxt, OSSIZE* pnumocts, OSOCTET* buffer, OSSIZE bufsiz);
+
+/**
+ * This function will decode a base64 text string to binary data in a dynamic
+ * buffer. Memory for the data is allocated using the rtxMemAlloc function and
+ * will be freed when the context is freed or a specifc call to rtmMemFree or
+ * rtxMemFreePtr is done.
+ *
+ * PRE: buffer pointer is located at first byte of the text string (it has
+ * moved beyond the encoding of tag 34).
+ *
+ * @param pctxt       Pointer to a context structure. This provides a storage
+ *                       area for the function to store all working variables
+ *                       that must be maintained between function calls.
+ * @param pOctStr     Pointer to structure to recieve decoded data.
+ * @return            Status of operation: 0 = success, negative value = error.
+ */
+EXTERNRT int rtCborDecDynBase64
+(OSCTXT* pctxt, OSDynOctStr64* pOctStr);
+
+/**
+ * This function will decode a base64url text string to binary data in a static
+ * buffer.
+ *
+ * PRE: buffer pointer is located at first byte of the text string (it has
+ * moved beyond the encoding of tag 33).
+ *
+ * @param pctxt       Pointer to a context structure. This provides a storage
+ *                       area for the function to store all working variables
+ *                       that must be maintained between function calls.
+ * @param pnumocts    Pointer to size-typed variable to receive decoded length.
+ * @param buffer      Static byte array into which data will be read.
+ * @param bufsiz      Size of the static byte array into which the data will
+ *                       be read.
+ * @return            Status of operation: 0 = success, negative value = error.
+ */
+EXTERNRT int rtCborDecBase64Url
+(OSCTXT* pctxt, OSSIZE* pnumocts, OSOCTET* buffer, OSSIZE bufsiz);
+
+/**
+ * This function will decode a base64url text string to binary data in a dynamic
+ * buffer. Memory for the data is allocated using the rtxMemAlloc function and
+ * will be freed when the context is freed or a specifc call to rtmMemFree or
+ * rtxMemFreePtr is done.
+ *
+ * PRE: buffer pointer is located at first byte of the text string (it has
+ * moved beyond the encoding of tag 33).
+ * Tag 33 is expected in the input.
+ *
+ * @param pctxt       Pointer to a context structure. This provides a storage
+ *                       area for the function to store all working variables
+ *                       that must be maintained between function calls.
+ * @param pOctStr     Pointer to structure to recieve decoded data.
+ * @return            Status of operation: 0 = success, negative value = error.
+ */
+EXTERNRT int rtCborDecDynBase64Url
+(OSCTXT* pctxt, OSDynOctStr64* pOctStr);
+
+/**
  * This function will decode byte string content into a static buffer.
  *
  * @param pctxt       Pointer to a context structure. This provides a storage
@@ -464,6 +539,42 @@ EXTERNRT int rtCborEncBool (OSCTXT* pctxt, OSBOOL value);
  * @return            Status of operation: 0 = success, negative value = error.
  */
 EXTERNRT int rtCborEncByteStr
+(OSCTXT* pctxt, const OSOCTET* value, OSSIZE nbytes, OSSIZE segsize);
+
+/**
+ * This function will encode the given binary data to a base64 text string,
+ * using tag 34.
+ *
+ * @param pctxt       Pointer to a context structure. This provides a storage
+ *                       area for the function to store all working variables
+ *                       that must be maintained between function calls.
+ * @param pvalue      Pointer to array of bytes to be encoded.
+ * @param nbytes      Number of bytes to encode.
+ * @param segsize     Size of a segment to be encoded.  If zero, standard
+ *                       length encoding will be done.  Otherwise, indefinite
+ *                       length encoding will be done (2.2.2) with each
+ *                       segment being of this length.
+ * @return            Status of operation: 0 = success, negative value = error.
+ */
+EXTERNRT int rtCborEncBase64
+(OSCTXT* pctxt, const OSOCTET* value, OSSIZE nbytes, OSSIZE segsize);
+
+/**
+ * This function will encode the given binary data to a base64url text string,
+ * using tag 33.
+ *
+ * @param pctxt       Pointer to a context structure. This provides a storage
+ *                       area for the function to store all working variables
+ *                       that must be maintained between function calls.
+ * @param pvalue      Pointer to array of bytes to be encoded.
+ * @param nbytes      Number of bytes to encode.
+ * @param segsize     Size of a segment to be encoded.  If zero, standard
+ *                       length encoding will be done.  Otherwise, indefinite
+ *                       length encoding will be done (2.2.2) with each
+ *                       segment being of this length.
+ * @return            Status of operation: 0 = success, negative value = error.
+ */
+EXTERNRT int rtCborEncBase64Url
 (OSCTXT* pctxt, const OSOCTET* value, OSSIZE nbytes, OSSIZE segsize);
 
 /**

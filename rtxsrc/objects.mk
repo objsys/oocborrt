@@ -3,6 +3,7 @@ $(OBJDIR)$(PS)context$(OBJ) \
 $(OBJDIR)$(PS)file$(OBJ) \
 $(OBJDIR)$(PS)membuf$(OBJ) \
 $(OBJDIR)$(PS)memmgmt$(OBJ) \
+$(OBJDIR)$(PS)rtxBase64$(OBJ) \
 $(OBJDIR)$(PS)rtxBigFloat$(OBJ) \
 $(OBJDIR)$(PS)rtxBigInt$(OBJ) \
 $(OBJDIR)$(PS)rtxBigIntCommon$(OBJ) \

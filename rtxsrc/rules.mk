@@ -30,6 +30,15 @@ $(OBJDIR)$(PS)memmgmt$(OBJ): $(RTXSRCDIR)$(PS)memmgmt.c $(RTXSRCDIR)$(PS)rtxComm
 	$(CC) $(RTXCFLAGS) -c $(IPATHS) $(OBJOUT) $(RTXSRCDIR)$(PS)memmgmt.c
 
 
+$(OBJDIR)$(PS)rtxBase64$(OBJ): $(RTXSRCDIR)$(PS)rtxBase64.c $(RTXSRCDIR)$(PS)rtxBase64.h \
+ $(RTXSRCDIR)$(PS)rtxContext.h $(RTXSRCDIR)$(PS)rtxDList.h $(RTXSRCDIR)$(PS)osSysTypes.h \
+ $(RTXSRCDIR)$(PS)rtxExternDefs.h $(RTXSRCDIR)$(PS)rtxCommonDefs.h $(RTXSRCDIR)$(PS)osMacros.h \
+ $(RTXSRCDIR)$(PS)rtxStack.h $(RTXSRCDIR)$(PS)rtxCtype.h \
+ $(RTXSRCDIR)$(PS)rtxError.h $(RTXSRCDIR)$(PS)rtxErrCodes.h $(RTXSRCDIR)$(PS)rtxMemory.h \
+ $(RTXSRCDIR)$(PS)rtxMemBuf.h
+	$(CC) $(RTXCFLAGS) -c $(IPATHS) $(OBJOUT) $(RTXSRCDIR)$(PS)rtxBase64.c
+
+
 $(OBJDIR)$(PS)rtxBigFloat$(OBJ): $(RTXSRCDIR)$(PS)rtxBigFloat.c $(RTXSRCDIR)$(PS)rtxBigFloat.h \
  $(RTXSRCDIR)$(PS)rtxBigInt.h $(RTXSRCDIR)$(PS)rtxContext.h $(RTXSRCDIR)$(PS)rtxDList.h \
  $(RTXSRCDIR)$(PS)osSysTypes.h $(RTXSRCDIR)$(PS)rtxExternDefs.h \

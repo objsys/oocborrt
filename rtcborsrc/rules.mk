@@ -9,6 +9,25 @@ $(OBJDIR)$(PS)rtCborDecArray$(OBJ): $(CBORSRCDIR)$(PS)rtCborDecArray.c $(CBORSRC
 	$(CC) $(CFLAGS) -c $(IPATHS) $(OBJOUT) $(CBORSRCDIR)$(PS)rtCborDecArray.c
 
 
+$(OBJDIR)$(PS)rtCborDecBase64$(OBJ): $(CBORSRCDIR)$(PS)rtCborDecBase64.c $(CBORSRCDIR)$(PS)osrtcbor.h \
+ $(RTXSRCDIR)$(PS)rtxContext.h $(RTXSRCDIR)$(PS)rtxDList.h $(RTXSRCDIR)$(PS)osSysTypes.h \
+ $(RTXSRCDIR)$(PS)rtxExternDefs.h $(RTXSRCDIR)$(PS)rtxCommonDefs.h $(RTXSRCDIR)$(PS)osMacros.h \
+ $(RTXSRCDIR)$(PS)rtxStack.h $(RTXSRCDIR)$(PS)rtxGenValueType.h $(RTXSRCDIR)$(PS)rtxBase64.h \
+ $(RTXSRCDIR)$(PS)rtxBuffer.h $(RTXSRCDIR)$(PS)rtxSList.h $(RTXSRCDIR)$(PS)rtxError.h \
+ $(RTXSRCDIR)$(PS)rtxErrCodes.h $(RTXSRCDIR)$(PS)rtxMemory.h
+	$(CC) $(CFLAGS) -c $(IPATHS) $(OBJOUT) $(CBORSRCDIR)$(PS)rtCborDecBase64.c
+
+
+$(OBJDIR)$(PS)rtCborDecDynBase64$(OBJ): $(CBORSRCDIR)$(PS)rtCborDecDynBase64.c \
+ $(CBORSRCDIR)$(PS)osrtcbor.h $(RTXSRCDIR)$(PS)rtxContext.h $(RTXSRCDIR)$(PS)rtxDList.h \
+ $(RTXSRCDIR)$(PS)osSysTypes.h $(RTXSRCDIR)$(PS)rtxExternDefs.h \
+ $(RTXSRCDIR)$(PS)rtxCommonDefs.h $(RTXSRCDIR)$(PS)osMacros.h $(RTXSRCDIR)$(PS)rtxStack.h \
+ $(RTXSRCDIR)$(PS)rtxGenValueType.h $(RTXSRCDIR)$(PS)rtxBase64.h $(RTXSRCDIR)$(PS)rtxBuffer.h \
+ $(RTXSRCDIR)$(PS)rtxSList.h $(RTXSRCDIR)$(PS)rtxError.h $(RTXSRCDIR)$(PS)rtxErrCodes.h \
+ $(RTXSRCDIR)$(PS)rtxMemory.h
+	$(CC) $(CFLAGS) -c $(IPATHS) $(OBJOUT) $(CBORSRCDIR)$(PS)rtCborDecDynBase64.c
+
+
 $(OBJDIR)$(PS)rtCborDecBigFloat$(OBJ): $(CBORSRCDIR)$(PS)rtCborDecBigFloat.c \
  $(CBORSRCDIR)$(PS)osrtcbor.h $(RTXSRCDIR)$(PS)rtxContext.h $(RTXSRCDIR)$(PS)rtxDList.h \
  $(RTXSRCDIR)$(PS)osSysTypes.h $(RTXSRCDIR)$(PS)rtxExternDefs.h \
@@ -193,6 +212,14 @@ $(OBJDIR)$(PS)rtCborEncArray$(OBJ): $(CBORSRCDIR)$(PS)rtCborEncArray.c $(CBORSRC
  $(RTXSRCDIR)$(PS)rtxStack.h $(RTXSRCDIR)$(PS)rtxGenValueType.h $(RTXSRCDIR)$(PS)rtxBuffer.h \
  $(RTXSRCDIR)$(PS)rtxSList.h $(RTXSRCDIR)$(PS)rtxError.h $(RTXSRCDIR)$(PS)rtxErrCodes.h
 	$(CC) $(CFLAGS) -c $(IPATHS) $(OBJOUT) $(CBORSRCDIR)$(PS)rtCborEncArray.c
+
+
+$(OBJDIR)$(PS)rtCborEncBase64$(OBJ): $(CBORSRCDIR)$(PS)rtCborEncBase64.c $(CBORSRCDIR)$(PS)osrtcbor.h \
+ $(RTXSRCDIR)$(PS)rtxContext.h $(RTXSRCDIR)$(PS)rtxDList.h $(RTXSRCDIR)$(PS)osSysTypes.h \
+ $(RTXSRCDIR)$(PS)rtxExternDefs.h $(RTXSRCDIR)$(PS)rtxCommonDefs.h $(RTXSRCDIR)$(PS)osMacros.h \
+ $(RTXSRCDIR)$(PS)rtxStack.h $(RTXSRCDIR)$(PS)rtxGenValueType.h $(RTXSRCDIR)$(PS)rtxBuffer.h \
+ $(RTXSRCDIR)$(PS)rtxSList.h $(RTXSRCDIR)$(PS)rtxError.h $(RTXSRCDIR)$(PS)rtxErrCodes.h
+	$(CC) $(CFLAGS) -c $(IPATHS) $(OBJOUT) $(CBORSRCDIR)$(PS)rtCborEncBase64.c
 
 
 $(OBJDIR)$(PS)rtCborEncBigFloat$(OBJ): $(CBORSRCDIR)$(PS)rtCborEncBigFloat.c \

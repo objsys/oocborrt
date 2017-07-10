@@ -12,10 +12,7 @@ unittest$(OBJ): unittest.c ../../rtcborsrc/osrtcbor.h \
  ../../rtxsrc/rtxContext.h ../../rtxsrc/rtxDList.h \
  ../../rtxsrc/osSysTypes.h ../../rtxsrc/rtxExternDefs.h \
  ../../rtxsrc/rtxCommonDefs.h ../../rtxsrc/osMacros.h \
- ../../rtxsrc/rtxStack.h ../../rtxsrc/rtxGenValueType.h \
- ../../rtxsrc/rtxBigFloat.h \
- ../../rtxsrc/rtxBigInt.h ../../rtxsrc/rtxBuffer.h \
- ../../rtxsrc/rtxSList.h ../../rtxsrc/rtxError.h \
+ ../../rtxsrc/rtxStack.h ../../rtxsrc/rtxError.h \
  ../../rtxsrc/rtxErrCodes.h ../../rtxsrc/rtxPrint.h
 
 depends:
