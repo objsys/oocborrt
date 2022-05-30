@@ -16,6 +16,7 @@
  *****************************************************************************/
 
 #include <ctype.h>
+#include <errno.h>
 #include <string.h>
 #include "rtcborsrc/osrtcbor.h"
 #include "rtxsrc/rtxBigFloat.h"
