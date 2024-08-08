@@ -37,7 +37,8 @@ int rtCborDecUTF8Str (OSCTXT* pctxt, OSOCTET byte1, char* buffer, OSSIZE bufsiz)
                ret = rtCborDecSize (pctxt, (byte1 & 0x1F), &segsize);
                if (0 == ret) {
                   if (idx + segsize < bufsiz) {
-                     ret = rtxReadBytes (pctxt, &buffer[idx], segsize);
+                     ret = rtxReadBytes
+                        (pctxt, (OSUTF8CHAR*)&buffer[idx], segsize);
                      if (0 == ret) idx += segsize;
                   }
                   else ret = RTERR_TOOBIG;
@@ -57,7 +58,7 @@ int rtCborDecUTF8Str (OSCTXT* pctxt, OSOCTET byte1, char* buffer, OSSIZE bufsiz)
       ret = rtCborDecSize (pctxt, len, &nbytes);
       if (0 == ret) {
          if (nbytes < bufsiz) {
-            ret = rtxReadBytes (pctxt, buffer, nbytes);
+            ret = rtxReadBytes (pctxt, (OSOCTET*)buffer, nbytes);
             if (0 == ret) buffer[nbytes] = '\0';
          }
          else ret = RTERR_TOOBIG;

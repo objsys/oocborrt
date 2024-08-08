@@ -23,7 +23,7 @@
 static const OSOCTET OSRTCBOR_FalseEnc[] = { 0xf4 };
 static const OSOCTET OSRTCBOR_TrueEnc[] = { 0xf5 };
 static const OSOCTET OSRTCBOR_NullEnc[] = { 0xf6 };
-static const OSOCTET OSRTCBOR_UnknownEnc[] = { 0xf7 };
+/*static const OSOCTET OSRTCBOR_UnknownEnc[] = { 0xf7 };*/
 
 int rtCborEncBool (OSCTXT* pctxt, OSBOOL value)
 {

@@ -39,7 +39,7 @@ int rtCborEncUTF8Str (OSCTXT* pctxt, const char* pvalue, OSSIZE segsize)
             ret = rtCborEncSize (pctxt, chunkSize, OSRTCBOR_UTF8STR);
             if (0 == ret) {
                /* Copy bytes to output buffer or stream */
-               ret = rtxWriteBytes (pctxt, &pvalue[idx], chunkSize);
+               ret = rtxWriteBytes (pctxt, (OSOCTET*)(&pvalue[idx]), chunkSize);
                if (0 == ret) idx += chunkSize;
             }
             if (0 != ret) break;
@@ -53,7 +53,7 @@ int rtCborEncUTF8Str (OSCTXT* pctxt, const char* pvalue, OSSIZE segsize)
       ret = rtCborEncSize (pctxt, slen, OSRTCBOR_UTF8STR);
       if (0 == ret) {
          /* Copy bytes to output buffer or stream */
-         ret = rtxWriteBytes (pctxt, pvalue, slen);
+         ret = rtxWriteBytes (pctxt, (OSOCTET*)pvalue, slen);
       }
    }
 

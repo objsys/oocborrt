@@ -55,7 +55,7 @@ int rtCborDecDynUTF8Str (OSCTXT* pctxt, OSOCTET byte1, char** ppUtf8Str)
                   }
 
                   /* Decode segment and append to list */
-                  ret = rtxReadBytes (pctxt, pvalue, segsize);
+                  ret = rtxReadBytes (pctxt, (OSOCTET*)pvalue, segsize);
                   if (0 == ret) {
                      if (0 == rtxSListAppend (&slist, pvalue)) {
                         ret = RTERR_NOMEM;
@@ -104,7 +104,7 @@ int rtCborDecDynUTF8Str (OSCTXT* pctxt, OSOCTET byte1, char** ppUtf8Str)
             if (0 == *ppUtf8Str) return LOG_RTERR (pctxt, RTERR_NOMEM);
 
             /* Read bytes into target variable */
-            ret = rtxReadBytes (pctxt, *ppUtf8Str, nbytes);
+            ret = rtxReadBytes (pctxt, (OSOCTET*)(*ppUtf8Str), nbytes);
             if (0 == ret) {
                (*ppUtf8Str)[nbytes] = '\0';
             }

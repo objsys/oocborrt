@@ -63,10 +63,10 @@ int rtJsonDecUInt64Value (OSCTXT* pctxt, OSUINT64* pvalue)
          if (value > maxUInt64 - tm)
             return LOG_RTERRNEW (pctxt, RTERR_TOOBIG);
 
-            value += tm;
-         }
-         else if (minus && ub == '0') ; /* -0000... */
-         else {
+         value += tm;
+      }
+      else if (minus && ub == '0') ; /* -0000... */
+      else {
          /* Push character back to be reread again */
          OSRTASSERT (pctxt->buffer.byteIndex > 0);
          pctxt->buffer.byteIndex--;

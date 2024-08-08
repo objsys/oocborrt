@@ -35,10 +35,11 @@ static int cborEncBase64
    OSOCTET tag[2];    /* bytes for base64 tag */
    
    /* convert bytes to base64 */
-   if ( url ) numocts = rtxBase64UrlEncodeData( pctxt, pvalue, nbytes, &pText);
-   else numocts = rtxBase64EncodeData( pctxt, pvalue, nbytes, &pText);
+   numocts =  url ?
+      rtxBase64UrlEncodeData(pctxt, (const char*)pvalue, nbytes, &pText) :
+      rtxBase64EncodeData(pctxt, (const char*)pvalue, nbytes, &pText);
    
-   if ( numocts < 0 ) return LOG_RTERR(pctxt, numocts);
+   if (numocts < 0) return LOG_RTERR(pctxt, numocts);
    
    /* encode base64 tag */
    tag[0] = 0xD8;
@@ -47,7 +48,7 @@ static int cborEncBase64
    
    if ( ret == 0 ) {
       /* encode base64 text */
-      ret = rtCborEncUTF8Str(pctxt, pText, segsize);
+      ret = rtCborEncUTF8Str(pctxt, (const char*)pText, segsize);
    }
    
    rtxMemFreePtr(pctxt, pText);

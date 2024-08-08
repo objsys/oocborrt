@@ -106,12 +106,12 @@ else if (ch >= 'A' && ch <= 'F') b = (unsigned char)((ch - 'A') + 10); \
 else b = 0xFF; } while(0)
 
 #define NIBBLETOHEXCHAR(b,ch) do { \
-if (b >= 0 && b <= 9) ch = (char)(b + '0'); \
+if (b <= 9) ch = (char)(b + '0'); \
 else if (b >= 0x0a && b <= 0x0f) ch = (char)((b - 10)+ 'a'); \
 else ch = '?'; } while(0)
 
 #define NIBBLETOUCHEXCHAR(b,ch) do { \
-if (b >= 0 && b <= 9) ch = (char)(b + '0'); \
+if (b <= 9) ch = (char)(b + '0'); \
 else if (b >= 0x0a && b <= 0x0f) ch = (char)((b - 10)+ 'A'); \
 else ch = '?'; } while(0)
 

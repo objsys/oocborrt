@@ -19,10 +19,10 @@
 #include "rtxsrc/rtxCtype.h"
 #include "rtxsrc/rtxReal.h"
 #include "rtjsonsrc/osrtjson.h"
-
+/*
 static const char nanStr[3] = { 'N', 'a', 'N' };
 static const char infStr[3] = { 'I', 'N', 'F' };
-
+*/
 int rtJsonDecDouble (OSCTXT* pctxt, OSREAL* pvalue)
 {
    OSBOOL minus = FALSE;

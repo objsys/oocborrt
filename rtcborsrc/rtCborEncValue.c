@@ -52,7 +52,8 @@ int rtCborEncValue (OSCTXT* pctxt, const OSRTGenValue* pvalue, OSUINT32 flags)
 
    case OSRTDataType_Array:
       ret = rtCborEncArray
-         (pctxt, pvalue->u.array.values, pvalue->u.array.nitems, flags);
+         (pctxt, (const OSRTGenValue**)pvalue->u.array.values,
+          pvalue->u.array.nitems, flags);
       break;
 
    case OSRTDataType_Map:

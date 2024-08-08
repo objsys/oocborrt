@@ -369,7 +369,7 @@ static int getErrCode (OSCTXT* pctxt)
 #define IS_LOW_SURROGATE(uc)  (((uc) & 0xFC00) == 0xDC00)
 #define DECODE_SURROGATE_PAIR(hi,lo) \
 ((((hi) & 0x3FF) << 10) + ((lo) & 0x3FF) + 0x10000)
-static const OSOCTET utf8_lead_bits[4] = { 0x00, 0xC0, 0xE0, 0xF0 };
+/*static const OSOCTET utf8_lead_bits[4] = { 0x00, 0xC0, 0xE0, 0xF0 };*/
 
 static int parseUnicodeChar
 (OSCTXT* pctxt, const OSOCTET* buffer, size_t buflen, OSUINT16* pUTF16hs)
@@ -725,7 +725,7 @@ static int jsonDecAnyType (OSCTXT* pctxt, OSRTMEMBUF* pmembuf)
                   pctxt->state = OK;
                   break;
                }
-               //else : fall-through to the default case and report error
+               else return LOG_RTERR (pctxt, RTERR_UNEXPELEM);
 
             default:
                return LOG_RTERR (pctxt, RTERR_UNEXPELEM);

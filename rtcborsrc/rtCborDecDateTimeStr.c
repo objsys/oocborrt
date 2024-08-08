@@ -19,6 +19,7 @@
 #include "rtxsrc/rtxBuffer.h"
 #include "rtxsrc/rtxDateTime.h"
 #include "rtxsrc/rtxError.h"
+#include "rtxsrc/rtxUTF8.h"
 
 int rtCborDecDateTimeStr (OSCTXT* pctxt, OSOCTET byte1, OSNumDateTime* pvalue)
 {
@@ -43,7 +44,8 @@ int rtCborDecDateTimeStr (OSCTXT* pctxt, OSOCTET byte1, OSNumDateTime* pvalue)
 
       ret = rtCborDecUTF8Str (pctxt, innerTag, (char*)strbuf, sizeof(strbuf));
       if (0 == ret && 0 != pvalue) {
-         ret = rtxParseDateTimeString (strbuf, OSCRTLSTRLEN(strbuf), pvalue);
+         ret = rtxParseDateTimeString
+            (strbuf, rtxUTF8LenBytes(strbuf), pvalue);
       }
    }
 
