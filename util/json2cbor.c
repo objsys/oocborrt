@@ -3,6 +3,7 @@
 #include "rtjsonsrc/osrtjson.h"
 #include "rtcborsrc/osrtcbor.h"
 #include "rtxsrc/rtxContext.h"
+#include "rtxsrc/rtxDiag.h"
 #include "rtxsrc/rtxFile.h"
 #include "rtxsrc/rtxHexDump.h"
 
@@ -63,8 +64,8 @@ static int json2cbor (OSCTXT* pJsonCtxt, OSCTXT* pCborCtxt)
             } 
             else if (pJsonCtxt->level > 0) {
                /* Check for proper closing character */
-               if (tag == OSRTCBOR_MAP && ch == ']' ||
-                   tag == OSRTCBOR_ARRAY && ch == '}') {
+               if ((tag == OSRTCBOR_MAP && ch == ']') ||
+                   (tag == OSRTCBOR_ARRAY && ch == '}')) {
                   const char* expected = (tag == OSRTCBOR_MAP) ? "}" : "]";
                   rtxErrAddStrParm (pJsonCtxt, expected);
                   rtxErrAddStrnParm (pJsonCtxt, &ch, 1);
@@ -114,15 +115,15 @@ static int json2cbor (OSCTXT* pJsonCtxt, OSCTXT* pCborCtxt)
 
          rtxMemFreePtr (pJsonCtxt, pNumberStr);
       }
-      else if (0 == rtJsonDecMatchToken2 (pJsonCtxt, "true", 4)) {
+      else if (0 == rtJsonDecMatchToken2 (pJsonCtxt, OSUTF8("true"), 4)) {
          ret = rtCborEncBool (pCborCtxt, TRUE);
          if (0 != ret) return LOG_RTERR (pCborCtxt, ret);
       }
-      else if (0 == rtJsonDecMatchToken2 (pJsonCtxt, "false", 5)) {
+      else if (0 == rtJsonDecMatchToken2 (pJsonCtxt, OSUTF8("false"), 5)) {
          ret = rtCborEncBool (pCborCtxt, FALSE);
          if (0 != ret) return LOG_RTERR (pCborCtxt, ret);
       }
-      else if (0 == rtJsonDecMatchToken2 (pJsonCtxt, "null", 4)) {
+      else if (0 == rtJsonDecMatchToken2 (pJsonCtxt, OSUTF8("null"), 4)) {
          ret = rtCborEncNull (pCborCtxt);
          if (0 != ret) return LOG_RTERR (pCborCtxt, ret);
       }
@@ -168,14 +169,14 @@ int main (int argc, char** argv)
       rtxErrPrint (&jsonCtxt);
       return ret;
    }
-   /* rtxSetDiag (&jsonCtxt, verbose); */
+   rtxSetDiag (&jsonCtxt, verbose);
 
    ret = rtxInitContext (&cborCtxt);
    if (ret != 0) {
       rtxErrPrint (&cborCtxt);
       return ret;
    }
-   /* rtxSetDiag (&cborCtxt, verbose); */
+   rtxSetDiag (&cborCtxt, verbose);
 
    /* Create file input stream */
 #if 0

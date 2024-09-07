@@ -15,6 +15,7 @@ $(OBJDIR)$(PS)rtxDateTimeParse$(OBJ) \
 $(OBJDIR)$(PS)rtxDateTimeParseCommon$(OBJ) \
 $(OBJDIR)$(PS)rtxDateTimeToString$(OBJ) \
 $(OBJDIR)$(PS)rtxDateTimeToStringCommon$(OBJ) \
+$(OBJDIR)$(PS)rtxDiag$(OBJ) \
 $(OBJDIR)$(PS)rtxError$(OBJ) \
 $(OBJDIR)$(PS)rtxGenValueType$(OBJ) \
 $(OBJDIR)$(PS)rtxHexDump$(OBJ) \

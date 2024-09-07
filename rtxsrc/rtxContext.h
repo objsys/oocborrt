@@ -119,15 +119,7 @@ typedef struct {
 #define OSDIAG          0x80000000  /* diagnostic tracing enabled       */
 #define OSTRACE         0x40000000  /* tracing enabled                  */
 #define OSDISSTRM       0x20000000  /* disable stream encode/decode     */
-#define OSNOSTRMBACKOFF 0x08000000  /* stream mark/reset funcs is not used */
-#define OS3GMOBORIG     0x04000000  /* 3G mobile-originated (net to MS) */
-/*
-OSCONTCLOSED: Flag indicating nothing more should be encoded to the current
-container.  This is set when a variable length field whose encoding space is
-determined by the container is encoded.
-Used by 3GPP encoders.
-*/
-#define OSCONTCLOSED    0x02000000  /* 3G container closed.             */
+#define OSPRINTEDN      0x10000000  /* output text in EDN format        */
 #define OSRESERVED1     0x01000000  /* reserved                         */
 #define OSBUFSYSALLOC   0x00800000  /* ctxt buf allocated using sys alloc */
 

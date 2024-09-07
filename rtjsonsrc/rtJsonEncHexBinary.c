@@ -17,20 +17,27 @@
 
 #include "osrtjson.h"
 
-int rtJsonEncHexStr (OSCTXT* pctxt, OSSIZE nocts, const OSOCTET* data)
+static int rtEncHexStr
+(OSCTXT* pctxt, OSSIZE nocts, const OSOCTET* data, OSBOOL edn)
 {
-   OSSIZE i, lbufx = 0;
+   OSSIZE i, reqBufSize = nocts * 2 + 2, lbufx = 0;
    int  stat, ub;
    char lbuf[80];
 
-   /* Verify indentation whitespace will fit in encode buffer */
+   /* Verify encoded data will fit in encode buffer */
 
    if (nocts > OSSIZE_MAX/2) return LOG_RTERR (pctxt, RTERR_TOOBIG);
 
-   stat = rtxCheckOutputBuffer (pctxt, nocts*2);
+   if (edn) {
+      reqBufSize += 3; /* for 'h' + 2 single quotes */
+   }
+   stat = rtxCheckOutputBuffer (pctxt, reqBufSize);
    if (stat != 0) return LOG_RTERR (pctxt, stat);
 
    OSRTSAFEPUTCHAR (pctxt, '"');
+   if (edn) {
+      rtxWriteBytes(pctxt, (const OSOCTET*)"h'", 2);
+   }
    for (i = 0; i < nocts; i++) {
       if (lbufx >= sizeof(lbuf) - 2) {
          /* flush buffer */
@@ -60,7 +67,20 @@ int rtJsonEncHexStr (OSCTXT* pctxt, OSSIZE nocts, const OSOCTET* data)
       stat = rtxCopyAsciiText (pctxt, lbuf);
       if (stat != 0) return LOG_RTERR (pctxt, stat);
    }
+   if (edn) {
+      OSRTSAFEPUTCHAR (pctxt, '\'');
+   }
    OSRTSAFEPUTCHAR (pctxt, '"');
 
    return 0;
+}
+
+int rtJsonEncHexStr (OSCTXT* pctxt, OSSIZE nocts, const OSOCTET* data)
+{
+   return rtEncHexStr(pctxt, nocts, data, FALSE);
+}
+
+int rtEDNEncHexStr (OSCTXT* pctxt, OSSIZE nocts, const OSOCTET* data)
+{
+   return rtEncHexStr(pctxt, nocts, data, TRUE);
 }

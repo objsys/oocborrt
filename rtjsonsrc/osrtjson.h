@@ -295,7 +295,7 @@ EXTERNJSON int rtJsonEncFloatValue (OSCTXT* pctxt, OSREAL value,
                         const OSDoubleFmt* pFmtSpec);
 
 /**
- * This function encodes a variable of the XSD hexBinary type.
+ * This function encodes a binary data variable into a hexadecimal string.
  *
  * @param pctxt        Pointer to context block structure.
  * @param nocts        Number of octets in the value string.
@@ -306,6 +306,20 @@ EXTERNJSON int rtJsonEncFloatValue (OSCTXT* pctxt, OSREAL value,
  */
 EXTERNJSON int rtJsonEncHexStr (OSCTXT* pctxt, OSSIZE nocts,
                                 const OSOCTET* data);
+
+/**
+ * This function encodes a binary data variable into a hexadecimal string
+ * in CBOR extended diagnostic format (EDN).
+ *
+ * @param pctxt        Pointer to context block structure.
+ * @param nocts        Number of octets in the value string.
+ * @param data         Value to be encoded.
+ * @return             Completion status of operation:
+ *                       - 0 = success,
+ *                       - negative return value is error.
+ */
+EXTERNJSON int rtEDNEncHexStr (OSCTXT* pctxt, OSSIZE nocts,
+                               const OSOCTET* data);
 
 /**
  * This function encodes a variable of the ASN.1 Bit string type.

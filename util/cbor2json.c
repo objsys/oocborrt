@@ -4,6 +4,7 @@
 #include "rtcborsrc/osrtcbor.h"
 #include "rtxsrc/rtxCharStr.h"
 #include "rtxsrc/rtxContext.h"
+#include "rtxsrc/rtxDiag.h"
 #include "rtxsrc/rtxFile.h"
 #include "rtxsrc/rtxHexDump.h"
 
@@ -57,7 +58,7 @@ static int cborElemNameToJson (OSCTXT* pCborCtxt, OSCTXT* pJsonCtxt)
    return 0;
 }
 
-static int cbor2json (OSCTXT* pCborCtxt, OSCTXT* pJsonCtxt)
+static int cbor2json (OSCTXT* pCborCtxt, OSCTXT* pJsonCtxt, OSBOOL edn)
 {
    int ret = 0;
    OSOCTET tag, ub;
@@ -102,8 +103,14 @@ static int cbor2json (OSCTXT* pCborCtxt, OSCTXT* pJsonCtxt)
       ret = rtCborDecDynByteStr (pCborCtxt, ub, &byteStr);
       if (0 != ret) return LOG_RTERR (pCborCtxt, ret);
 
-      /* Encode JSON */
-      ret = rtJsonEncHexStr (pJsonCtxt, byteStr.numocts, byteStr.data);
+      if (edn) {
+         /* Encode EDN */
+         ret = rtEDNEncHexStr (pJsonCtxt, byteStr.numocts, byteStr.data);
+      }
+      else {
+         /* Encode JSON */
+         ret = rtJsonEncHexStr (pJsonCtxt, byteStr.numocts, byteStr.data);
+      }
       rtxMemFreePtr (pCborCtxt, byteStr.data);
       if (0 != ret) return LOG_RTERR (pJsonCtxt, ret);
 
@@ -148,7 +155,7 @@ static int cbor2json (OSCTXT* pCborCtxt, OSCTXT* pJsonCtxt)
 
             /* Make recursive call */
             if (0 == ret)
-               ret = cbor2json (pCborCtxt, pJsonCtxt);
+               ret = cbor2json (pCborCtxt, pJsonCtxt, edn);
             if (0 != ret) {
                OSCTXT* pctxt = 
                   (rtxErrGetErrorCnt(pJsonCtxt) > 0) ? pJsonCtxt : pCborCtxt;
@@ -175,7 +182,7 @@ static int cbor2json (OSCTXT* pCborCtxt, OSCTXT* pJsonCtxt)
 
                /* Make recursive call */
                if (0 == ret)
-                  ret = cbor2json (pCborCtxt, pJsonCtxt);
+                  ret = cbor2json (pCborCtxt, pJsonCtxt, edn);
                if (0 != ret) {
                   OSCTXT* pctxt = 
                   (rtxErrGetErrorCnt(pJsonCtxt) > 0) ? pJsonCtxt : pCborCtxt;
@@ -222,7 +229,7 @@ int main (int argc, char** argv)
    OSCTXT      jsonCtxt, cborCtxt;
    OSOCTET*    pMsgBuf = 0;
    size_t      msglen;
-   OSBOOL      verbose = FALSE;
+   OSBOOL      edn = FALSE, verbose = FALSE;
    const char* filename = "message.cbor";
    const char* outfname = "message.json";
    int         ret;
@@ -234,11 +241,14 @@ int main (int argc, char** argv)
          if (!strcmp (argv[i], "-v")) verbose = TRUE;
          else if (!strcmp (argv[i], "-i")) filename = argv[++i];
          else if (!strcmp (argv[i], "-o")) outfname = argv[++i];
+         else if (!strcmp (argv[i], "-edn")) edn = TRUE;
          else {
-            printf ("usage: cbor2json [-v] [-i <filename>] [-o filename]\n");
+            printf ("usage: cbor2json [options]\n");
+            printf ("options:\n");
             printf ("   -v  verbose mode: print trace info\n");
             printf ("   -i <filename>  read CBOR msg from <filename>\n");
             printf ("   -o <filename>  write JSON data to <filename>\n");
+            printf ("   -edn  output in Extended Diag Notation (EDN) form\n");
             return 1;
          }
       }
@@ -251,19 +261,21 @@ int main (int argc, char** argv)
       return ret;
    }
    rtxErrInit();
-   /* rtxSetDiag (&jsonCtxt, verbose); */
-
+   rtxSetDiag (&jsonCtxt, verbose);
+   if (edn) {
+      rtxCtxtSetFlag (&jsonCtxt, OSPRINTEDN);
+   }
    ret = rtxInitContext (&cborCtxt);
    if (ret != 0) {
       rtxErrPrint (&cborCtxt);
       return ret;
    }
-   /* rtxSetDiag (&cborCtxt, verbose); */
+   rtxSetDiag (&cborCtxt, verbose);
 
    /* Create file input stream */
 #if 0
    /* Streaming not supported in open source version
-   ret = rtxStreamFileCreateReader (&jsonCtxt, filename);
+   ret = rtxStreamFileCreateReader (&cborCtxt, filename);
    */
 #else
    /* Read input file into memory buffer */
@@ -273,7 +285,7 @@ int main (int argc, char** argv)
    }
 #endif
    if (0 != ret) {
-      rtxErrPrint (&jsonCtxt);
+      rtxErrPrint (&cborCtxt);
       rtxFreeContext (&jsonCtxt);
       rtxFreeContext (&cborCtxt);
       return ret;
@@ -289,7 +301,7 @@ int main (int argc, char** argv)
    }
 
    /* Invoke the translation function */
-   ret = cbor2json (&cborCtxt, &jsonCtxt);
+   ret = cbor2json (&cborCtxt, &jsonCtxt, edn);
 
    if (0 == ret && cborCtxt.level != 0) 
       ret = LOG_RTERR (&cborCtxt, RTERR_UNBAL);

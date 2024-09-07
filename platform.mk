@@ -1,98 +1,114 @@
-.SUFFIXES : .c .cc .cpp .obj
+.SUFFIXES : .c .cpp .o
 
-.cpp.obj:
+.cpp.o:
 	$(CCC) $(CCFLAGS) -c $(IPATHS) $<
 
-.c.obj:
+.c.o:
 	$(CC) $(CFLAGS) -c $(IPATHS) $<
 
-.cc.obj:
-	$(CC) $(CFLAGS) -c $(IPATHS) $<
+.y.c:
 
-# The following symbols should be valid on all Windows systems
-CC	  = cl
-CCC	  = cl
-CFLAGS_	  = -nologo -EHsc -W3 -Zm200
-CVARS0_	  = -DWIN32 -D_WIN32 -GF
-CVARSDLL_ = $(CVARSRTDLL_) -DCBORDLL
-COPTIMIZE0_ = -Ob2 -Gy -Ox 
-CDEBUG0_  = -Zi -D_DEBUG
-FS	  = ;
-LIBCMD	  = lib /NOLOGO /OUT:$@
-LIBADD	  = lib /NOLOGO /OUT:$@ $@
-LINK	  = cl
-LINKOPT0  = /nologo /link /OUT:$@ /OPT:REF  
-LINKDBG_  = /MAP /DEBUG 
-LINKOPTM_ = /OPT:REF  
-OBJOUT	  = -Fo$@
-PLATFORM  = WIN32
-PS	  = \#
-PURECVAR  = -TC
+# Platform specific definitions for Linux/GNU.
 
-CVARSMTR_ = $(CVARS0_) -D_MT -MT
-CVARSMDR_ = $(CVARS0_) -D_MT -D_DLL -MD
-CVARSR_	  = $(CVARSMDR_)
+# The following variables are platform specific and may need
+# to be edited if moving to a different system.
 
-CVARSMTD_ = $(CVARS0_) -D_MT -MTd
-CVARSMDD_ = $(CVARS0_) -D_MT -D_DLL -MDd
-CVARSD_	  = $(CVARSMDD_)
-
-LINKOPTR_  = $(LINKOPT0)
-LINKOPT2R  = /nologo /link /OUT:$@ /OPT:REF
-
-LINKOPTD_  = $(LINKOPT0) $(LINKDBG_)
-LINKOPT2D  = /nologo /link /OUT:$@ /OPT:REF $(LINKDBG_)
-COPTIMIZE_ = $(COPTIMIZE0_) -D_OPTIMIZED
-
+# compiler defs
+CC        = gcc
+CCC       = g++
+CFLAGS_   = $(GCCWARN_) -Wnested-externs
+CCFLAGS_  = $(GCCWARN_) -Wno-reorder $(CEXCEPT_)
+CVARS_    = -DASN1RT -DGNU -D_GNU_SOURCE -DHAVE_STDINT_H -DHAVE_VA_COPY
+LINKDBG_  = -g
+CELF_     = -fPIC
+CUSEELF_  = -fpic
+CEXCEPT_  = -fexceptions -fpermissive
+CVARS0_   = $(CVARS_)
+CVARSR_   = $(CVARS_)
+CVARSMT_  = $(CVARS_)
+CVARSMTR_ = $(CVARS_)
+CVARSMTD_ = $(CVARS_)
+CVARSMD_  = $(CVARS_)
+CVARSMDR_ = $(CVARS_)
+CVARSMDD_ = $(CVARS_)
+CVARSMTR  = $(CVARS_)
+CDEV_     = -D_TRACE
+COPTIMIZE0_ = -O2
+CSPACEOPT_ = -Os
+CTIMEOPT_ = -O2
+GCCWARN_ = -Wall -Wpointer-arith -Wextra -Wundef -Wno-unused-parameter -Wshadow -Wcast-align -Wcomments -Wredundant-decls
+WERROR = -Werror
 # START RELEASE
-#CDEV_     = -D_TRACE -Od
-#CDEBUG_   = $(CDEV_) $(CDEBUG0_)
-#CBLDTYPE_ = $(COPTIMIZE_)
-#CVARS_    = $(CVARSR_)
-#CVARSMT_  = $(CVARSMTR_)
-#CVARSMD_  = $(CVARSMDR_)
-#LINKOPT_  = $(LINKOPTR_)
-#LINKOPT2  = $(LINKOPT2R)
+#BLDSUBDIR  = release
+#COPTIMIZE_ = $(COPTIMIZE0_) -D_OPTIMIZED  
+#CDEBUG_    = -g
+#LINKOPT_   = -Wl,-Bstatic -o $@
+#LINKOPTRLM_ = $(LINKOPT_)
+#CBLDTYPE_  = $(COPTIMIZE_)
 # END RELEASE
 
 # START DEBUG
-CDEV_     = -D_TRACE -Od $(CDEBUG0_)
-CDEBUG_	  = $(CDEV_)
-CBLDTYPE_ = $(CDEBUG_)
-CVARS_    = $(CVARSD_)
-CVARSMT_  = $(CVARSMTD_)
-CVARSMD_  = $(CVARSMDD_)
-LINKOPT_  = $(LINKOPTD_)
-LINKOPT2  = $(LINKOPT2D)
+BLDSUBDIR  = debug
+CDEBUG_    = -g -D_DEBUG -D_TRACE
+RTCPPFLAGS = -Wno-non-virtual-dtor
+COPTIMIZE_ = 
+LINKOPT_   = $(LINKDBG_) -o $@ -Wl,-Bstatic
+LINKOPTRLM_ = $(LINKOPT_)
+CBLDTYPE_  = $(CDEBUG_)
 # END DEBUG
 
+CCDEBUG_  = $(CDEBUG_)
+
+LIBCMD    = ar r $@
+LIBADD    = $(LIBCMD)
+LINK      = $(CCC)
+LINKSO    = $(LINK)
+LINKOPT2  = $(LINKOPT_)
+LINKELF_  = -shared $(CELF_) -o $@
+LINKELF2_ = $(LINKELF_)
+LINKUELF_ = $(CUSEELF_) -o $@
+LINKOPTDYN_ = $(LINKUELF_)
+COMPACT   = -Os -D_COMPACT
+OBJOUT    = -o $@
+OUTFILE   = -o
+
 # File extensions
-EXE	= .exe
-OBJ	= .obj
+EXE     = 
+OBJ     = .o
+SO      = .so
 
 # Run-time library
-LIBPFX	=
-LIBEXT	= lib
-LPPFX	= -LIBPATH:
-LLPFX   =
-LLEXT   = .lib
-LLAEXT  = _a.$(LIBEXT)
-A       = _a.$(LIBEXT)
-MTA     = mt_a.$(LIBEXT)
-MDA     = md_a.$(LIBEXT)
-IMP     = .$(LIBEXT)
-DLL     = .dll
+LIBPFX  = lib
+LIBEXT  = a
+LPPFX   = -L
+LLPFX   = -l
+LLEXT   =
+LLAEXT  = 
+
+A       = .$(LIBEXT)
+MTA     = $(A)
+MDA     = $(A)
+IMP     = $(SO)
+IMPEXT  = $(IMP)
+IMPLINK =
+DLL     = $(SO)
 RTDIRSFX =
 
-# O/S commands
-COPY	 = -copy
-MOVE	 = -move
-MV	 = $(MOVE)
-RM	 = -del
-STRIP	 = strip -g -S
-MAKE     = nmake
-RMDIR = -rmdir /S /Q
-MKDIR = -mkdir
+# Include and library paths
+PS      = /
+FS      = :
+IPATHS_ = 
+CSC     = dmcs
 
-LLCBOR	= oortcbor$(A)
-LLSYS	= 
+# O/S commands
+COPY     = cp -f
+MOVE     = mv -f
+MV       = $(MOVE)
+RM       = rm -f
+STRIP    = strip
+MAKE     = make
+RMDIR    = rm -rf
+MKDIR    = mkdir -p
+
+LLCBOR	= -loortcbor
+LLSYS   = -Wl,-Bdynamic -lm -lpthread
