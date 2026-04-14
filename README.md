@@ -3,7 +3,7 @@
 
 The Objective Open CBOR Run-time is an open source C run-time 
 library implementation of the Concise Binary Object Representation 
-(CBOR) format as documented in IETF RFC 7049.  It contains functions
+(CBOR) format as documented in IETF RFC 8949.  It contains functions
 for encoding and decoding data to and from CBOR format.
 
 ### Building on Windows using Visual Studio

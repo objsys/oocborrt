@@ -19,7 +19,7 @@
  *
  * The <b>C run-time Concise Binary Object Representation (CBOR) library</b>
  * contains functions used to encode/decode CBOR data as defined in IETF RFC
- * 7049. These functions are identified by their <i>rtCbor</i> prefixes.
+ * 8949. These functions are identified by their <i>rtCbor</i> prefixes.
  */
 /**
  * @file osrtcbor.h
